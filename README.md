@@ -28,9 +28,11 @@ Also see [EDK2 website](https://github.com/tianocore/tianocore.github.io/wiki/Us
 
 Then ./scripts/firstrun.sh
 
-Finally, you can use one of the device scripts in the scripts folder to build your bootimg/thing.
+Finally, "./scripts/baffinlite.sh" to compile.
 
-Then fastboot boot uefi.img from lk2nd.
+Then make a Image from AIK (Android Image Kitchen) and rename image-new.img to boot.img and make a tar for odin.
+
+Finally, flash it with Odin.
 
 # Credits
 
