@@ -1,7 +1,7 @@
-Attempt to create a minimal EDK2 for some MSM8909 devices
+Attempt to create a minimal EDK2 for Samsung Galaxy Grand Neo (baffinlite)
 
 ## Status
-Boots to EFI shell, eMMC is working, the memory map is from WP target, ACPI from Lumia 650.
+Boots to MMU init
 
 ## Building
 Tested on Ubuntu 22.04.
