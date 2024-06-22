@@ -37,3 +37,5 @@ Finally, flash it with Odin.
 # Credits
 
 SimpleFbDxe screen driver is from imbushuo's [Lumia950XLPkg](https://github.com/WOA-Project/Lumia950XLPkg).
+
+Based on sonic011gamer [edk2-msm8909](https://github.com/sonic011gamer/edk2-msm8909).
