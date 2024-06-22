@@ -38,11 +38,4 @@ PlatformPeim(VOID);
 // Either implemented by PrePiLib or by MemoryInitPei
 VOID BuildMemoryTypeInformationHob(VOID);
 
-EFI_STATUS
-EFIAPI
-QGicPeim(VOID);
-
-VOID QGicCpuInit(VOID);
-VOID QgicCpuInitSecondary(VOID);
-
 #endif /* _PREPI_H_ */
