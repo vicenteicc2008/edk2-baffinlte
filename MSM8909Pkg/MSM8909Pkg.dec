@@ -34,18 +34,14 @@
   gEFIDroidKeypadDeviceProtocolGuid = { 0xb27625b5, 0x0b6c, 0x4614, { 0xaa, 0x3c, 0x33, 0x13, 0xb5, 0x1d, 0x36, 0x46 } }
 
 [PcdsFixedAtBuild.common]
+  # Memory allocation
+  gMSM8909PkgTokenSpaceGuid.PcdUefiMemPoolBase|0|UINT64|0x00000a106
+  gMSM8909PkgTokenSpaceGuid.PcdUefiMemPoolSize|0|UINT32|0x00000a107
   # Simple FrameBuffer
   gEfiMdeModulePkgTokenSpaceGuid.PcdEmuVariableNvModeEnable|TRUE|BOOLEAN|1
   gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferAddress|0x00400000|UINT32|0x0000a400 # 0x7C400000
   gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferWidth|480|UINT32|0x0000a401
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|854|UINT32|0x0000a402
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|24|UINT32|0x0000a403
+  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferHeight|800|UINT32|0x0000a402
+  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferPixelBpp|32|UINT32|0x0000a403
   gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleWidth|480|UINT32|0x0000a404
-  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleHeight|854|UINT32|0x0000a405 
-  gArmPlatformTokenSpaceGuid.PcdSystemMemoryUefiRegionSize|0x08000000|UINT32|0x00000036 #0x00800000
-  gArmPlatformTokenSpaceGuid.PcdCPUCorePrimaryStackSize|0x10000|UINT32|0x00000038
-  gArmPlatformTokenSpaceGuid.PcdCPUCoreSecondaryStackSize|0x10000|UINT32|0x00000039
- # Memory allocation
-  gMSM8909PkgTokenSpaceGuid.PcdPreAllocatedMemorySize|0|UINT64|0x00000a106
-  gMSM8909PkgTokenSpaceGuid.PcdUefiMemPoolSize|0|UINT32|0x00000a107
-  gArmTokenSpaceGuid.PcdCpuVectorBaseAddress|0x80C40000|UINT32|0x00000a108
+  gMSM8909PkgTokenSpaceGuid.PcdMipiFrameBufferVisibleHeight|800|UINT32|0x0000a405 

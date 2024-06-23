@@ -3,7 +3,7 @@
 
 #include <Library/ArmLib.h>
 
-#define MAX_ARM_MEMORY_REGION_DESCRIPTOR_COUNT 128
+#define MAX_ARM_MEMORY_REGION_DESCRIPTOR_COUNT 64
 
 /* Below flag is used for system memory */
 #define SYSTEM_MEMORY_RESOURCE_ATTR_CAPABILITIES                               \
@@ -19,9 +19,9 @@ typedef enum { NoHob, AddMem, AddDev, HobOnlyNoCacheSetting, MaxMem } DeviceMemo
 #define MEMORY_REGION_NAME_MAX_LENGTH 32
 
 typedef struct {
-  CHAR8                        Name[MEMORY_REGION_NAME_MAX_LENGTH];
   EFI_PHYSICAL_ADDRESS         Address;
   UINT64                       Length;
+  CHAR8                        Name[MEMORY_REGION_NAME_MAX_LENGTH];
   DeviceMemoryAddHob           HobOption;
   EFI_RESOURCE_TYPE            ResourceType;
   EFI_RESOURCE_ATTRIBUTE_TYPE  ResourceAttribute;
@@ -41,13 +41,14 @@ typedef struct {
 #define Reserv EfiReservedMemoryType
 #define Conv EfiConventionalMemory
 #define BsData EfiBootServicesData
-#define BsCode EfiBootServicesCode
 #define RtData EfiRuntimeServicesData
-#define RtCode EfiRuntimeServicesCode
+#define LdData EfiLoaderData
 #define MmIO EfiMemoryMappedIO
+#define MaxMem EfiMaxMemoryType
+#define BsCode EfiBootServicesCode
+#define RtCode EfiRuntimeServicesCode
 
-#define NS_DEVICE ARM_MEMORY_REGION_ATTRIBUTE_DEVICE
-#define DEVICE ARM_MEMORY_REGION_ATTRIBUTE_NONSECURE_DEVICE
+#define NS_DEVICE ARM_MEMORY_REGION_ATTRIBUTE_NONSECURE_DEVICE
 #define WRITE_THROUGH ARM_MEMORY_REGION_ATTRIBUTE_WRITE_THROUGH
 #define WRITE_THROUGH_XN ARM_MEMORY_REGION_ATTRIBUTE_WRITE_THROUGH
 #define WRITE_BACK ARM_MEMORY_REGION_ATTRIBUTE_WRITE_BACK
@@ -60,20 +61,15 @@ static ARM_MEMORY_REGION_DESCRIPTOR_EX gDeviceMemoryDescriptorEx[] = {
      MemLabel(32 Char.),  MemBase,    MemSize, BuildHob, ResourceType, ResourceAttribute, MemoryType, CacheAttributes
 */
 
-//--------------------- Register ---------------------
-    {"Periphs",           0x00000000, 0x10000000,  AddMem, MEM_RES, UNCACHEABLE,  RtCode,   NS_DEVICE},
-
 //--------------------- DDR --------------------- */
 
-    {"HLOS 0",            0x80000000, 0x00C00000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv, WRITE_BACK_XN},
-    {"UEFI Stack",        0x80C00000, 0x00040000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsData, WRITE_BACK},
-    {"CPU Vectors",       0x80C40000, 0x00010000, AddMem, SYS_MEM, SYS_MEM_CAP,  BsCode, WRITE_BACK},
-    {"HLOS 1",            0x80C50000, 0x0F3B0000, AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
-    {"UEFI FD",           0x80000000, 0x00100000, AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
-    /*Memory hole 0xbbc00000 -> 0xc0000000*/
-    {"Display Reserved",  0x9e980000, 0x00800000, AddMem, MEM_RES, SYS_MEM_CAP, Reserv, WRITE_THROUGH_XN},
+	{0x80000000, 0x00D50000, "HLOS 0",           AddMem, SYS_MEM, SYS_MEM_CAP, Conv,   WRITE_BACK},
+    {0x80000000, 0x00200000, "UEFI FD",          AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
+	{0x9e980000, 0x00800000, "Display Reserved", AddMem, MEM_RES, WRITE_THROUGH, MaxMem, WRITE_THROUGH},
+	{0x80C00000, 0x00040000, "UEFI Stack",       AddMem, SYS_MEM, SYS_MEM_CAP, BsData, WRITE_BACK},
+	{0x80C40000, 0x00010000, "CPU Vectors",      AddMem, SYS_MEM, SYS_MEM_CAP, BsCode, WRITE_BACK},
 
     /* Terminator for MMU */
-    { "Terminator", 0, 0, 0, 0, 0, 0, 0}};
+    {0, 0, "Terminator", 0, 0, 0, 0, 0}
 
 #endif

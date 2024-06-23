@@ -18,13 +18,16 @@ ASM_FUNC(ArmPlatformPeiBootAction)
   bx    lr
 
 //UINTN
-//ArmPlatformGetCorePosition (
+//ArmPlatformIsPrimaryCore (
 //  IN UINTN MpId
 //  );
-ASM_FUNC(ArmPlatformGetCorePosition)
-  and   r1, r0, #ARM_CORE_MASK
-  and   r0, r0, #ARM_CLUSTER_MASK
-  add   r0, r1, r0, LSR #7
+ASM_FUNC(ArmPlatformIsPrimaryCore)
+  MOV32  (r1, FixedPcdGet32 (PcdArmPrimaryCoreMask))
+  and   r0, r0, r1
+  MOV32  (r1, FixedPcdGet32 (PcdArmPrimaryCore))
+  cmp   r0, r1
+  moveq r0, #1
+  movne r0, #0
   bx    lr
 
 //UINTN
@@ -36,14 +39,11 @@ ASM_FUNC(ArmPlatformGetPrimaryCoreMpId)
   bx    lr
 
 //UINTN
-//ArmPlatformIsPrimaryCore (
+//ArmPlatformGetCorePosition (
 //  IN UINTN MpId
 //  );
-ASM_FUNC(ArmPlatformIsPrimaryCore)
-  MOV32  (r1, FixedPcdGet32 (PcdArmPrimaryCoreMask))
-  and   r0, r0, r1
-  MOV32  (r1, FixedPcdGet32 (PcdArmPrimaryCore))
-  cmp   r0, r1
-  moveq r0, #1
-  movne r0, #0
+ASM_FUNC(ArmPlatformGetCorePosition)
+  and   r1, r0, #ARM_CORE_MASK
+  and   r0, r0, #ARM_CLUSTER_MASK
+  add   r0, r1, r0, LSR #7
   bx    lr
